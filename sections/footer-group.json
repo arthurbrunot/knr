@@ -1,0 +1,80 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "reassurance": {
+      "type": "knr-reassurance",
+      "blocks": {
+        "shipping": {
+          "type": "item",
+          "settings": {
+            "title": "Livraison offerte",
+            "text": "<p>Livraison offerte <br>dès 60 € d'achat <br>en France métropolitaine.</p>"
+          }
+        },
+        "returns": {
+          "type": "item",
+          "settings": {
+            "title": "Retours gratuits",
+            "text": "<p>Retours acceptés <br>jusqu'à 30 jours <br>après réception.</p>"
+          }
+        },
+        "payment": {
+          "type": "item",
+          "settings": {
+            "title": "Paiement sécurisé",
+            "text": "<p>Paiement 100 % sécurisé <br>par carte bancaire, <br>PayPal ou virement.</p>"
+          }
+        },
+        "service": {
+          "type": "item",
+          "settings": {
+            "title": "Service client",
+            "text": "<p>Du lundi au vendredi <br>de 9h à 18h par email <br>et téléphone.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "shipping",
+        "returns",
+        "payment",
+        "service"
+      ],
+      "settings": {
+        "color_scheme": "highlight",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "footer": {
+      "type": "knr-footer",
+      "settings": {
+        "color_scheme": "surface",
+        "menu_1": "footer-decouvrir",
+        "menu_2": "footer-service-client",
+        "menu_3": "footer-legal",
+        "about_heading": "À propos de Maison Célestine",
+        "about_text": "<p>Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d’actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.</p>",
+        "certification_logo": "shopify://shop_images/certification-cosmos-organic.svg",
+        "certification_text": "Certifié COSMOS ORGANIC par ECOCERT Greenlife",
+        "certification_link_label": "Voir le certificat",
+        "certification_link": "https://www.ecocert.com",
+        "social_facebook": "https://www.facebook.com",
+        "social_instagram": "https://www.instagram.com",
+        "social_tiktok": "https://www.tiktok.com",
+        "social_linkedin": "https://www.linkedin.com"
+      }
+    }
+  },
+  "order": [
+    "reassurance",
+    "footer"
+  ]
+}

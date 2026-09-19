@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    {% render 'head-meta' %}
+
+    {%- unless settings.favicon == blank -%}
+      <link
+        rel="shortcut icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endunless -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %}
+        &ndash; tagged "{{ current_tags | join: ', ' }}"
+      {%- endif -%}
+      {%- if current_page != 1 %}
+        &ndash; Page {{ current_page -}}
+      {%- endif -%}
+      {%- unless page_title contains shop.name %}
+        &ndash; {{ shop.name -}}
+      {%- endunless -%}
+    </title>
+
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link
+      rel="preconnect"
+      href="https://cdn.shopify.com"
+      crossorigin
+    >
+
+    {% render 'fonts' %}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    {% render 'css-variables' %}
+
+    {{ content_for_header }}
+
+    {% render 'head-scripts' %}
+
+    {% render 'schemas' %}
+  </head>
+
+  {% liquid
+    assign body_classes = template | handleize | append: '-template'
+  %}
+
+  <body class="{{ body_classes }}">
+    <a class="skip-to-content-link" href="#main-content">{{ 'accessibility.skip_to_text' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="main-content" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% section 'knr-cart-drawer' %}
+  </body>
+</html>

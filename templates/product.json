@@ -1,0 +1,238 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "knr-main-product",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {
+            "title": "Description",
+            "open": true
+          }
+        },
+        "benefits": {
+          "type": "accordion",
+          "settings": {
+            "title": "Bienfaits",
+            "content": "{{ product.metafields.custom.benefits_text | metafield_tag }}",
+            "open": false
+          }
+        },
+        "ingredients": {
+          "type": "accordion",
+          "settings": {
+            "title": "Ingrédients clés",
+            "content": "{{ product.metafields.custom.key_ingredients | metafield_tag }}",
+            "open": false
+          }
+        },
+        "skin": {
+          "type": "accordion",
+          "settings": {
+            "title": "Adapté aux peaux",
+            "content": "{{ product.metafields.custom.skin_types | metafield_tag }}",
+            "open": false
+          }
+        },
+        "message_shipping": {
+          "type": "message",
+          "settings": {
+            "text": "Livraison offerte dès 60 € d'achat."
+          }
+        },
+        "message_returns": {
+          "type": "message",
+          "settings": {
+            "text": "Retours gratuits sous 30 jours."
+          }
+        },
+        "message_payment": {
+          "type": "message",
+          "settings": {
+            "text": "Paiement 100 % sécurisé."
+          }
+        }
+      },
+      "block_order": [
+        "description",
+        "benefits",
+        "ingredients",
+        "skin",
+        "message_shipping",
+        "message_returns",
+        "message_payment"
+      ],
+      "settings": {
+        "color_scheme": "default",
+        "panel_color_scheme": "default",
+        "hero_image_mobile": "{{ product.metafields.custom.hero_image_mobile.value }}",
+        "packshot": "{{ product.metafields.custom.packshot.value }}",
+        "lightbox_color_scheme": "",
+        "show_breadcrumb": true,
+        "short_description": "{{ product.metafields.custom.short_description.value }}",
+        "score_1_label": "Yuka",
+        "score_1_value": "{{ product.metafields.custom.score_yuka.value }}",
+        "score_2_label": "INCI Beauty",
+        "score_2_value": "{{ product.metafields.custom.score_inci.value }}",
+        "reviews_anchor": "avis",
+        "delivery_days": 3,
+        "messages_interval": 5,
+        "related_heading": "Complétez votre rituel",
+        "related_products": []
+      }
+    },
+    "story": {
+      "type": "knr-image-banner",
+      "settings": {
+        "color_scheme": "default",
+        "text_color": "#ffffff",
+        "image": "{{ product.metafields.custom.story_image.value }}",
+        "image_mobile": "{{ product.metafields.custom.story_image_mobile.value }}",
+        "eyebrow": "{{ product.metafields.custom.story_eyebrow.value }}",
+        "text": "{{ product.metafields.custom.story_text | metafield_tag }}",
+        "author": "{{ product.metafields.custom.story_author.value }}",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "how_to_use": {
+      "type": "knr-how-to-use",
+      "settings": {
+        "color_scheme": "default",
+        "heading": "How to use",
+        "steps": "{{ product.metafields.custom.usage_steps.value }}",
+        "link_label": "Lire plus",
+        "padding_top": 40,
+        "padding_bottom": 120,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 64,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "before_after": {
+      "type": "knr-before-after",
+      "settings": {
+        "color_scheme": "surface",
+        "heading": "Ce que disent nos clientes",
+        "text": "Des transformations visibles dès 4 semaines. Nos clientes témoignent d'une peau visiblement régénérée, plus ferme et lumineuse.",
+        "before_image": "{{ product.metafields.custom.before_image.value }}",
+        "after_image": "{{ product.metafields.custom.after_image.value }}",
+        "before_label": "Before",
+        "after_label": "After",
+        "testimonials": "{{ product.metafields.custom.testimonials.value }}",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "faq": {
+      "type": "knr-faq",
+      "settings": {
+        "color_scheme": "default",
+        "heading": "Questions fréquentes",
+        "items": "{{ product.metafields.custom.faq.value }}",
+        "open_first": true,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "reviews": {
+      "type": "knr-reviews",
+      "settings": {
+        "color_scheme": "default",
+        "heading": "Avis clients",
+        "anchor": "avis",
+        "padding_top": 0,
+        "padding_bottom": 120,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 64,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "news": {
+      "type": "knr-latest-news",
+      "settings": {
+        "color_scheme": "default",
+        "heading": "Latest news",
+        "blog": "news",
+        "articles_count": 4,
+        "link_label": "Voir tous les articles",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "newsletter": {
+      "type": "knr-newsletter",
+      "settings": {
+        "color_scheme": "default",
+        "image": "shopify://shop_images/rituel-collection-cactus.png",
+        "heading": "L'alliance de la science botanique et du luxe naturel pour une peau visiblement rajeunie en 4 semaines.",
+        "button_label": "S’inscrire",
+        "note": "Formule brevetée, testée dermatologiquement, 97 % d'ingrédients d'origine naturelle.",
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_mobile_spacing": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "story",
+    "how_to_use",
+    "before_after",
+    "faq",
+    "reviews",
+    "news",
+    "newsletter"
+  ]
+}

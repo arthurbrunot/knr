@@ -1,0 +1,17 @@
+package.json
+package-lock.json
+prettier.config.js
+README.md
+
+# Fichiers temporaires d'écriture atomique (éditeurs, Prettier, outillage).
+# Sans ça, le watcher de `shopify theme dev` peut attraper un
+# `<fichier>.liquid.tmp.<pid>.<hash>` en cours d'écriture, l'envoyer à Shopify
+# qui le rejette (« Doit avoir une extension de fichier .liquid »), et la CLI
+# reste bloquée sur cette erreur jusqu'au redémarrage.
+*.tmp.*
+*.swp
+*~
+
+# Documentation projet — ne concerne pas le thème.
+CLAUDE.md
+docs/*

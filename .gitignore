@@ -1,0 +1,18 @@
+node_modules/
+*.log
+
+# Shopify CLI
+.shopify
+shopify.theme.toml
+backup-live-theme
+
+# OS / editors
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea
+.claude/

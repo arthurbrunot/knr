@@ -1,0 +1,474 @@
+{%- liquid
+  assign overlay = false
+  if section.settings.overlay_on_product and request.page_type == 'product'
+    assign overlay = true
+  endif
+
+  if overlay
+    assign scheme = section.settings.overlay_color_scheme
+  else
+    assign scheme = section.settings.color_scheme
+  endif
+
+  assign menu = section.settings.menu
+-%}
+
+<sticky-header
+  class="knr-header color-{{ scheme }}{% if overlay %} knr-header--overlay{% endif %}"
+  data-scheme-top="{{ scheme }}"
+  data-scheme-scrolled="{{ section.settings.color_scheme }}"
+>
+  <header class="knr-header__bar">
+    <a href="{{ routes.root_url }}" class="knr-header__logo">
+      {%- if section.settings.logo != blank -%}
+        {{
+          section.settings.logo
+          | image_url: width: 480
+          | image_tag:
+            class: 'knr-header__logo-image',
+            widths: '160,320,480',
+            sizes: '10rem',
+            alt: ''
+        }}
+      {%- else -%}
+        {% render 'logo-wordmark', class: 'knr-header__logo-image' %}
+      {%- endif -%}
+      <span class="visually-hidden">{{ shop.name }}</span>
+    </a>
+
+    {%- if menu.links.size > 0 -%}
+      <nav class="knr-header__nav" aria-label="{{ 'sections.header.menu' | t }}">
+        <ul class="knr-header__menu">
+          {%- for link in menu.links -%}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="knr-header__menu-link"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{- link.title -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <ul class="knr-header__actions">
+      {%- if section.settings.store_locator_url != blank -%}
+        <li>
+          <a href="{{ section.settings.store_locator_url }}" class="knr-header__action">
+            {% render 'icon-marker-pin' %}
+            <span class="visually-hidden">{{ 'sections.header.store_locator' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- if shop.customer_accounts_enabled -%}
+        <li class="knr-header__desktop-only">
+          <a href="{{ routes.account_url }}" class="knr-header__action">
+            {% render 'icon-user', class: 'knr-header__icon-user' %}
+            <span class="visually-hidden">{{ 'sections.header.account' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+
+      <li>
+        <a href="{{ routes.search_url }}" class="knr-header__action">
+          {% render 'icon-search' %}
+          <span class="visually-hidden">{{ 'sections.header.search' | t }}</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="{{ routes.cart_url }}"
+          class="knr-header__action knr-header__cart"
+          data-cart-drawer-open
+        >
+          {% render 'icon-bag' %}
+          <span class="visually-hidden">{{ 'sections.header.cart' | t }}</span>
+          <cart-count
+            class="knr-header__cart-count"
+            {% if cart.item_count == 0 %}
+              hidden
+            {% endif %}
+          >
+            {{- cart.item_count -}}
+          </cart-count>
+        </a>
+      </li>
+
+      {%- if menu.links.size > 0 -%}
+        <li class="knr-header__mobile-only">
+          <menu-drawer>
+            <button
+              type="button"
+              class="knr-header__action knr-header__burger"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="MenuDrawer-{{ section.id }}"
+              data-drawer-open
+            >
+              <span class="knr-header__burger-lines"></span>
+              <span class="visually-hidden">{{ 'sections.header.open_menu' | t }}</span>
+            </button>
+
+            <dialog
+              id="MenuDrawer-{{ section.id }}"
+              class="knr-header__drawer color-{{ section.settings.color_scheme }}"
+              aria-label="{{ 'sections.header.menu' | t }}"
+            >
+              <div class="knr-header__drawer-bar">
+                <a href="{{ routes.root_url }}" class="knr-header__logo">
+                  {% render 'logo-wordmark', class: 'knr-header__logo-image' %}
+                  <span class="visually-hidden">{{ shop.name }}</span>
+                </a>
+                <button
+                  type="button"
+                  class="knr-header__action knr-header__close"
+                  data-drawer-close
+                >
+                  <span class="knr-header__burger-lines"></span>
+                  <span class="visually-hidden">{{ 'sections.header.close_menu' | t }}</span>
+                </button>
+              </div>
+              <nav aria-label="{{ 'sections.header.menu' | t }}">
+                <ul class="knr-header__drawer-menu">
+                  {%- for link in menu.links -%}
+                    <li>
+                      <a
+                        href="{{ link.url }}"
+                        class="knr-header__drawer-link title-h3"
+                        {% if link.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{- link.title -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </nav>
+            </dialog>
+          </menu-drawer>
+        </li>
+      {%- endif -%}
+    </ul>
+  </header>
+</sticky-header>
+
+<script src="{{ 'knr-header.js' | asset_url }}" type="module" defer></script>
+
+{% stylesheet %}
+  .knr-header-section {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    pointer-events: none;
+  }
+
+  .knr-header.knr-header {
+    display: block;
+    height: var(--header-height);
+    background: transparent;
+  }
+
+  .knr-header.knr-header--overlay {
+    height: 0;
+  }
+
+  .knr-header__bar {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 6.25rem;
+    height: var(--header-height);
+    padding-inline: var(--space-6);
+    background-color: var(--color-background);
+    pointer-events: auto;
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      background-color var(--duration-base) ease,
+      color var(--duration-base) ease,
+      box-shadow var(--duration-base) ease;
+  }
+
+  .knr-header--overlay .knr-header__bar {
+    background-color: transparent;
+  }
+
+  .knr-header.is-scrolled .knr-header__bar {
+    background-color: var(--color-background);
+    box-shadow: inset 0 calc(var(--border-base) * -1) 0 var(--palette-surface);
+  }
+
+  .knr-header.is-hidden .knr-header__bar {
+    transform: translateY(-100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .knr-header__bar {
+      transition: none;
+    }
+  }
+
+  .knr-header__logo {
+    display: block;
+    flex: 1 1 0;
+    min-width: 1px;
+  }
+
+  .knr-header__logo-image {
+    display: block;
+    width: 100%;
+    max-width: 10rem;
+    height: auto;
+  }
+
+  .knr-header__nav,
+  .knr-header__actions > .knr-header__desktop-only {
+    display: none;
+  }
+
+  .knr-header__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    height: var(--header-height);
+  }
+
+  .knr-header__menu-link {
+    font-size: var(--text-base);
+    line-height: 1;
+    letter-spacing: var(--tracking-none);
+    white-space: nowrap;
+    transition: opacity var(--duration-fast) ease;
+  }
+
+  .knr-header__menu-link:hover,
+  .knr-header__menu-link[aria-current='page'] {
+    opacity: 0.6;
+  }
+
+  .knr-header__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-4);
+    height: var(--header-height);
+  }
+
+  .knr-header__actions > li {
+    display: flex;
+  }
+
+  .knr-header__action {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--duration-fast) ease;
+  }
+
+  .knr-header__action::before {
+    content: '';
+    position: absolute;
+    inset: -0.25rem;
+  }
+
+  .knr-header__action:hover {
+    opacity: 0.6;
+  }
+
+  .knr-header__icon-user {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .knr-header__cart-count {
+    position: absolute;
+    top: -0.25rem;
+    left: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 0.75rem;
+    height: 0.75rem;
+    font-size: var(--text-2xs);
+    line-height: 1;
+    letter-spacing: var(--tracking-none);
+    color: var(--color-background);
+    background-color: var(--color-foreground);
+    border-radius: var(--radius-full);
+  }
+
+  .knr-header__cart-count[hidden] {
+    display: none;
+  }
+
+  .knr-header__burger-lines {
+    position: relative;
+    display: block;
+    width: 1rem;
+    height: 0.3125rem;
+  }
+
+  .knr-header__burger-lines::before,
+  .knr-header__burger-lines::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: var(--border-base);
+    background-color: currentColor;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .knr-header__burger-lines::before {
+    top: 0;
+  }
+
+  .knr-header__burger-lines::after {
+    bottom: 0;
+  }
+
+  .knr-header__close .knr-header__burger-lines::before {
+    transform: translateY(0.125rem) rotate(45deg);
+  }
+
+  .knr-header__close .knr-header__burger-lines::after {
+    transform: translateY(-0.125rem) rotate(-45deg);
+  }
+
+  .knr-header__drawer {
+    pointer-events: auto;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0 var(--space-6) var(--space-10);
+    border: 0;
+  }
+
+  .knr-header__drawer::backdrop {
+    background: transparent;
+  }
+
+  .knr-header__drawer-bar {
+    display: flex;
+    align-items: center;
+    gap: 6.25rem;
+    height: var(--header-height);
+  }
+
+  .knr-header__drawer-menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-10);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .knr-header__drawer[open] {
+      animation: knr-drawer-in var(--duration-base) var(--ease-out);
+    }
+
+    @keyframes knr-drawer-in {
+      from {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .knr-header__bar {
+      justify-content: space-between;
+      gap: var(--space-6);
+    }
+
+    .knr-header__logo {
+      flex: none;
+      width: 10rem;
+    }
+
+    .knr-header__nav {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      display: block;
+      transform: translateX(-50%);
+    }
+
+    .knr-header__actions > .knr-header__desktop-only {
+      display: flex;
+    }
+
+    .knr-header__mobile-only {
+      display: none !important;
+    }
+
+    .knr-header__actions {
+      gap: var(--space-3);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - Header",
+  "tag": "div",
+  "class": "knr-header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Optional. Defaults to the Maison Célestine wordmark, which follows the text color."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "url",
+      "id": "store_locator_url",
+      "label": "Store locator link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Product pages"
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_on_product",
+      "label": "Overlay the product media",
+      "info": "Transparent header on top of the first product image.",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "overlay_color_scheme",
+      "label": "Overlay text color scheme",
+      "info": "Only the text color is used, the background stays transparent.",
+      "default": "inverse"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

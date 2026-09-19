@@ -1,0 +1,105 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="knr-announcement-bar color-{{ section.settings.color_scheme }}">
+    {%- for block in section.blocks -%}
+      <p class="knr-announcement-bar__message" {{ block.shopify_attributes }}>
+        {%- if block.settings.text != blank -%}
+          <span class="knr-announcement-bar__text">{{ block.settings.text }}</span>
+        {%- endif -%}
+        {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+          <a href="{{ block.settings.link }}" class="knr-announcement-bar__link">
+            {{- block.settings.link_label -}}
+          </a>
+        {%- endif -%}
+      </p>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .knr-announcement-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: var(--space-6);
+    min-height: var(--announcement-height);
+    padding-inline: var(--layout-px);
+  }
+
+  .knr-announcement-bar__message {
+    display: flex;
+    align-items: center;
+    gap: 0.1875rem;
+    font-size: var(--text-base);
+    line-height: 1;
+    letter-spacing: var(--tracking-none);
+    white-space: nowrap;
+  }
+
+  .knr-announcement-bar__text,
+  .knr-announcement-bar__link {
+    padding-bottom: var(--space-0-5);
+  }
+
+  .knr-announcement-bar__link {
+    box-shadow: inset 0 calc(var(--border-thin) * -1) 0 currentColor;
+    transition: opacity var(--duration-fast) ease;
+  }
+
+  .knr-announcement-bar__link:hover {
+    opacity: 0.6;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - Announcement bar",
+  "tag": "aside",
+  "class": "knr-announcement-bar-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "inverse"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "presets": [
+    {
+      "name": "KNR - Announcement bar",
+      "blocks": [
+        {
+          "type": "message"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

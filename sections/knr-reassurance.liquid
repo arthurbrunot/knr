@@ -1,0 +1,243 @@
+{%- if section.blocks.size > 0 -%}
+  <scroll-carousel
+    class="knr-reassurance section-spacing color-{{ section.settings.color_scheme }}"
+    role="region"
+    aria-label="{{ 'sections.reassurance.label' | t }}"
+    {% render 'section-spacing', s: section.settings %}
+  >
+    <ul
+      class="knr-reassurance__track scrollbar-hide"
+      role="list"
+      aria-label="{{ 'sections.reassurance.label' | t }}"
+      data-carousel-track
+    >
+      {%- for block in section.blocks -%}
+        <li class="knr-reassurance__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h2 class="label-lg">{{ block.settings.title }}</h2>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="knr-reassurance__text text-base">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="knr-reassurance__dots" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          <span
+            class="knr-reassurance__dot{% if forloop.first %} is-active{% endif %}"
+            data-carousel-dot
+          ></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </scroll-carousel>
+
+  <script src="{{ 'scroll-carousel.js' | asset_url }}" type="module" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .knr-reassurance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    padding-inline: var(--space-10);
+  }
+
+  .knr-reassurance__track {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .knr-reassurance__item {
+    display: flex;
+    flex: 0 0 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    text-align: center;
+    scroll-snap-align: center;
+  }
+
+  .knr-reassurance__text br {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .knr-reassurance__text br {
+      display: inline;
+    }
+  }
+
+  .knr-reassurance__dots {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .knr-reassurance__dot {
+    width: var(--space-4);
+    height: var(--border-base);
+    background-color: var(--palette-accent);
+    transition: background-color var(--duration-base) ease;
+  }
+
+  .knr-reassurance__dot.is-active {
+    background-color: var(--color-foreground);
+  }
+
+  @media (min-width: 1024px) {
+    .knr-reassurance__track {
+      gap: var(--space-20);
+      max-width: var(--layout-max-width);
+      overflow: visible;
+    }
+
+    .knr-reassurance__item {
+      flex: 1 1 0;
+      min-width: 1px;
+    }
+
+    .knr-reassurance__dots {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - Reassurance",
+  "tag": "section",
+  "class": "knr-reassurance-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "highlight"
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Inner padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Inner padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Outer margin top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Outer margin bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_spacing",
+      "label": "Custom mobile spacing",
+      "default": true,
+      "info": "Off: mobile uses half the desktop values."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Inner padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Inner padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Outer margin top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Outer margin bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Commitment",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "KNR - Reassurance",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,284 @@
+{%- assign steps = section.settings.steps -%}
+
+{%- if steps.size > 0 -%}
+  <div
+    class="knr-steps section-spacing color-{{ section.settings.color_scheme }}"
+    {% render 'section-spacing', s: section.settings %}
+  >
+    {%- if section.settings.heading != blank -%}
+      <div class="layout">
+        <h2 class="title-h2">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <scroll-carousel class="knr-steps__carousel">
+      <ol class="knr-steps__track layout-grid scrollbar-hide" role="list" data-carousel-track>
+        {%- for step in steps -%}
+          <li class="knr-steps__card">
+            <div class="knr-steps__media">
+              {%- if step.image.value -%}
+                {{
+                  step.image.value
+                  | image_url: width: 1080
+                  | image_tag:
+                    widths: '255,510,448,896,1080',
+                    sizes: '(min-width: 1024px) 31vw, 15.9375rem',
+                    loading: 'lazy',
+                    alt: step.image.value.alt
+                }}
+              {%- endif -%}
+            </div>
+            <div class="knr-steps__details">
+              <div class="knr-steps__text">
+                <p class="knr-steps__number" aria-hidden="true">
+                  {%- if forloop.index < 10 %}0{% endif -%}
+                  {{- forloop.index -}}
+                </p>
+                <h3 class="text-xl">{{ step.title.value }}</h3>
+                {%- if step.description != blank -%}
+                  <p class="text-lg">{{ step.description.value | newline_to_br }}</p>
+                {%- endif -%}
+              </div>
+              {%- if step.link != blank and section.settings.link_label != blank -%}
+                <a href="{{ step.link.value }}" class="link knr-steps__link">
+                  {{- section.settings.link_label -}}
+                  <span class="visually-hidden">, {{ step.title.value }}</span>
+                </a>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {% render 'knr-carousel-progress', class: 'knr-steps__progress' %}
+    </scroll-carousel>
+  </div>
+
+  <script src="{{ 'scroll-carousel.js' | asset_url }}" type="module" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .knr-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .knr-steps__carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+  }
+
+  .knr-steps__track {
+    position: relative;
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    scroll-padding-inline: var(--layout-px);
+    scroll-snap-type: x mandatory;
+  }
+
+  .knr-steps__card {
+    display: flex;
+    flex: 0 0 15.9375rem;
+    flex-direction: column;
+    gap: var(--space-6);
+    scroll-snap-align: start;
+  }
+
+  .knr-steps__media {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--palette-accent-light) 16%, transparent);
+  }
+
+  .knr-steps__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .knr-steps__details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-inline: var(--space-4);
+  }
+
+  .knr-steps__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .knr-steps__number {
+    font-size: var(--text-lg);
+    line-height: 1;
+    letter-spacing: var(--tracking-tighter);
+    text-transform: uppercase;
+  }
+
+  .knr-steps__link {
+    align-self: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    .knr-steps__track {
+      display: grid;
+      overflow: visible;
+    }
+
+    .knr-steps__card {
+      grid-column: span 4;
+    }
+
+    .knr-steps__details {
+      padding-inline: var(--space-6);
+    }
+
+    .knr-steps__link,
+    .knr-steps__progress {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - How to use",
+  "tag": "section",
+  "class": "knr-how-to-use-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to use"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "steps",
+      "label": "Steps",
+      "metaobject_type": "usage_step",
+      "limit": 6,
+      "info": "Connect to the product's usage steps metafield."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "info": "Mobile only, shown when a step has a link.",
+      "default": "Lire plus"
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Inner padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Inner padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Outer margin top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Outer margin bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_spacing",
+      "label": "Custom mobile spacing",
+      "default": true,
+      "info": "Off: mobile uses half the desktop values."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Inner padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Inner padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Outer margin top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Outer margin bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KNR - How to use"
+    }
+  ]
+}
+{% endschema %}

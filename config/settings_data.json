@@ -1,0 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_scheme": "default",
+    "sections": {
+      "knr-cart-drawer": {
+        "type": "knr-cart-drawer",
+        "settings": {
+          "color_scheme": "",
+          "free_shipping_threshold": 60,
+          "show_suggestions": true,
+          "suggestions_heading": "Complétez votre rituel",
+          "empty_link": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "12120936241911852800": {
+        "type": "shopify://apps/judge-me-reviews/blocks/reviews_tab/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {
+          "position": "right"
+        }
+      }
+    },
+    "color_schemes": {
+      "default": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "foreground": "#000000",
+          "foreground_muted": "#b5a282",
+          "button": "#000000",
+          "button_label": "#ffffff"
+        }
+      },
+      "surface": {
+        "settings": {
+          "background": "#f9f8f5",
+          "background_gradient": "",
+          "foreground": "#000000",
+          "foreground_muted": "#b5a282",
+          "button": "#000000",
+          "button_label": "#ffffff"
+        }
+      },
+      "highlight": {
+        "settings": {
+          "background": "#dcd5c3",
+          "background_gradient": "",
+          "foreground": "#000000",
+          "foreground_muted": "#000000",
+          "button": "#000000",
+          "button_label": "#ffffff"
+        }
+      },
+      "inverse": {
+        "settings": {
+          "background": "#000000",
+          "background_gradient": "",
+          "foreground": "#ffffff",
+          "foreground_muted": "#dcd5c3",
+          "button": "#ffffff",
+          "button_label": "#000000"
+        }
+      }
+    }
+  }
+}

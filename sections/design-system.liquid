@@ -1,0 +1,353 @@
+{%- liquid
+  assign c = settings.colors
+-%}
+{%- capture palette_data -%}
+  text:{{ c.text }},background:{{ c.background }},surface:{{ c.surface }},media:{{ c.media }},canvas:{{ c.canvas }},accent:{{ c.accent }},accent_light:{{ c.accent_light }},rating:{{ c.rating }},error:{{ c.error }},success:{{ c.success }}
+{%- endcapture -%}
+{%- liquid
+  assign swatches = palette_data | strip | split: ','
+  assign spaces = '0-5:2,1:4,2:8,3:12,4:16,5:20,6:24,8:32,10:40,12:48,16:64,20:80,30:120' | split: ','
+-%}
+
+<div class="design-system color-{{ section.settings.color_scheme }}">
+  <div class="layout design-system__inner">
+    <header class="design-system__header">
+      <h1 class="title-h1">Design system</h1>
+      <p class="text-lg text-muted">
+        Tokens et primitives du thème, relevés sur la maquette Figma. La palette et les color
+        schemes sont éditables dans Paramètres du thème › Colors.
+      </p>
+    </header>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Palette - <code>--palette-*</code></h2>
+      <div class="design-system__swatches">
+        {%- for swatch in swatches -%}
+          {%- assign pair = swatch | strip | split: ':' -%}
+          <div class="design-system__swatch">
+            <span class="design-system__chip" style="background-color: {{ pair[1] }}"></span>
+            <p class="text-base">{{ pair[0] }}</p>
+            <p class="text-xs text-muted">{{ pair[1] }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Color schemes - <code>.color-&lt;id&gt;</code></h2>
+      <div class="design-system__schemes">
+        {%- for scheme in settings.color_schemes -%}
+          <div class="design-system__scheme color-{{ scheme.id }}">
+            <p class="label">{{ scheme.id }}</p>
+            <p class="text-lg">Texte principal</p>
+            <p class="text-base text-muted">Texte secondaire (foreground-muted)</p>
+            <p class="text-base text-subtle">Texte atténué (foreground-subtle)</p>
+            <hr class="design-system__rule">
+            <div class="design-system__row">
+              <button type="button" class="btn btn-primary">Primaire</button>
+              <button type="button" class="btn btn-secondary">Secondaire</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Typographie - Inter 400</h2>
+      <dl class="design-system__type">
+        <dt class="text-xs text-muted">.title-h1 - 40/48 · 32/40 mobile · -4 %</dt>
+        <dd class="title-h1">Ce que disent nos clientes</dd>
+        <dt class="text-xs text-muted">.title-h2 - 32/40 · -4 %</dt>
+        <dd class="title-h2">How to use</dd>
+        <dt class="text-xs text-muted">.title-h3 - 24/32 · -4 %</dt>
+        <dd class="title-h3">Comment utiliser ?</dd>
+        <dt class="text-xs text-muted">.text-xl - 24/32 · -2 %</dt>
+        <dd class="text-xl">€75.00</dd>
+        <dt class="text-xs text-muted">.text-lg - 14/22 · -2 %</dt>
+        <dd class="text-lg">Concentré de pureté active. Éclat et uniformité retrouvés.</dd>
+        <dt class="text-xs text-muted">.text-md - 13/21 · -2 %</dt>
+        <dd class="text-md">Ajouter au panier</dd>
+        <dt class="text-xs text-muted">.text-base - 12/20 · -2 %</dt>
+        <dd class="text-base">Une huile anti-âge sèche ultra-légère, pénétration immédiate.</dd>
+        <dt class="text-xs text-muted">.text-sm - 10/14 · -2 %</dt>
+        <dd class="text-sm">Soins anti-âge / Collection Cactus</dd>
+        <dt class="text-xs text-muted">.text-xs - 10/12 · -2 %</dt>
+        <dd class="text-xs">Mercredi 25 février</dd>
+        <dt class="text-xs text-muted">.label-lg - 14/14 · capitales</dt>
+        <dd class="label-lg">Sérum Précieux Régénérant</dd>
+        <dt class="text-xs text-muted">.label - 12/12 · capitales</dt>
+        <dd class="label">Complétez votre rituel</dd>
+        <dt class="text-xs text-muted">.label-xs - 8/8 · capitales · -4 %</dt>
+        <dd class="label-xs">Vérifié</dd>
+      </dl>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Espacements - <code>--space-N</code> = N × 4px</h2>
+      <div class="design-system__spaces">
+        {%- for space in spaces -%}
+          {%- assign pair = space | split: ':' -%}
+          <div class="design-system__space">
+            <span class="text-xs design-system__space-name">--space-{{ pair[0] }}</span>
+            <span class="design-system__space-bar" style="width: var(--space-{{ pair[0] }})"></span>
+            <span class="text-xs text-muted">{{ pair[1] }}px</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Boutons &amp; liens</h2>
+      <div class="design-system__row">
+        <button type="button" class="btn btn-primary">Ajouter au panier</button>
+        <button type="button" class="btn btn-secondary">Poser une question</button>
+        <button type="button" class="btn btn-primary btn-lg">Ajouter au panier</button>
+        <button type="button" class="btn btn-primary" disabled>Épuisé</button>
+        <button type="button" class="btn btn-primary btn-loadable" data-loading="true">
+          <span>Chargement</span>
+        </button>
+      </div>
+      <div class="design-system__row">
+        <a href="#" class="link">Voir tous les articles</a>
+        <a href="#" class="link">Lire plus</a>
+      </div>
+      <div class="design-system__narrow">
+        <button type="button" class="btn btn-primary btn-block">Écrire un avis</button>
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Badges</h2>
+      <div class="design-system__row">
+        <span class="badge">Unifie</span>
+        <span class="badge">Protège</span>
+        <span class="badge badge-sm">Vérifié</span>
+      </div>
+      <div class="design-system__row design-system__on-media">
+        <span class="badge badge-solid">Unifie</span>
+        <span class="badge badge-solid">Protège</span>
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Champs</h2>
+      <div class="design-system__narrow design-system__fields">
+        <label class="visually-hidden" for="ds-email">E-mail</label>
+        <input id="ds-email" class="field-input" type="email" placeholder="E-mail">
+        <label class="visually-hidden" for="ds-email-error">E-mail (erreur)</label>
+        <input
+          id="ds-email-error"
+          class="field-input"
+          type="email"
+          value="adresse@invalide"
+          aria-invalid="true"
+          aria-describedby="ds-email-error-msg"
+        >
+        <p id="ds-email-error-msg" class="message message-error">Adresse e-mail invalide</p>
+      </div>
+    </section>
+
+    <section class="design-system__group">
+      <h2 class="label-lg">Rich text - <code>.rte</code></h2>
+      <div class="rte design-system__narrow">
+        <p>
+          Formulé à partir de <strong>97 % d'ingrédients d'origine naturelle</strong>, ce sérum
+          précieux active les mécanismes naturels de <a href="#">régénération cellulaire</a>.
+        </p>
+        <ul>
+          <li>Huile de rosier muscat</li>
+          <li>Rétinol végétal</li>
+          <li>Extrait de cactus</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="design-system__group">
+    <div class="layout">
+      <h2 class="label-lg">Grille - <code>.layout-grid</code> 12 col · 6 mobile · gouttière 8px</h2>
+    </div>
+    <div class="layout-grid design-system__grid">
+      {%- for i in (1..12) -%}
+        <span class="design-system__col text-xs">{{ i }}</span>
+      {%- endfor -%}
+      <span
+        class="col-span-var design-system__span text-xs"
+        style="--col-span: 4; --col-span-m: 6"
+      >
+        span 4 - 448px (How to use)
+      </span>
+      <span
+        class="col-span-var design-system__span text-xs"
+        style="--col-span: 3; --col-span-m: 3"
+      >
+        span 3 - 334px (Latest news)
+      </span>
+    </div>
+  </section>
+</div>
+
+{% stylesheet %}
+  .design-system {
+    padding-block: var(--space-20);
+  }
+
+  .design-system__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
+  }
+
+  .design-system__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: var(--layout-narrow);
+  }
+
+  .design-system__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .design-system__group code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+    text-transform: none;
+  }
+
+  .design-system__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .design-system__narrow {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .design-system__swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: var(--space-4);
+  }
+
+  .design-system__swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .design-system__chip {
+    display: block;
+    height: 4rem;
+    margin-bottom: var(--space-2);
+    border: var(--border-base) solid var(--color-border);
+  }
+
+  .design-system__schemes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    border: var(--border-base) solid var(--color-border);
+  }
+
+  .design-system__scheme {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-8);
+  }
+
+  .design-system__rule {
+    border-top: var(--border-base) solid var(--color-border);
+  }
+
+  .design-system__type {
+    display: grid;
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-4) var(--space-8);
+  }
+
+  @media (max-width: 767px) {
+    .design-system__type {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-1);
+    }
+
+    .design-system__type dd {
+      margin-bottom: var(--space-4);
+    }
+  }
+
+  .design-system__spaces {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .design-system__space {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .design-system__space-name {
+    width: 6rem;
+  }
+
+  .design-system__space-bar {
+    height: var(--space-4);
+    background-color: var(--palette-accent);
+  }
+
+  .design-system__on-media {
+    width: fit-content;
+    padding: var(--space-4);
+    background-color: var(--palette-accent);
+  }
+
+  .design-system__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .design-system__grid {
+    --grid-gap-y: var(--space-2);
+  }
+
+  .design-system__col,
+  .design-system__span {
+    display: grid;
+    place-items: center;
+    min-height: var(--space-12);
+    background-color: color-mix(in srgb, var(--palette-accent-light) 60%, transparent);
+  }
+
+  .design-system__span {
+    background-color: var(--palette-accent-light);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Design system",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Design system"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,8 @@
+node_modules
+.shopify
+package-lock.json
+
+# Écrits par l'éditeur de thème : reformatés par Shopify à chaque sauvegarde.
+config/settings_data.json
+templates/*.json
+sections/*.json

@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page-contact",
+      "settings": {}
+    },
+    "under_construction": {
+      "type": "under-construction",
+      "settings": {
+        "color_scheme": "surface",
+        "product": "serum-precieux-regenerant"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "under_construction"
+  ]
+}

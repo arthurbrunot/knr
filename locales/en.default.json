@@ -1,0 +1,95 @@
+{
+  "accessibility": {
+    "skip_to_text": "Skip to content"
+  },
+  "general": {
+    "password_page": {
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "login_form_error": "Wrong password"
+    },
+    "breadcrumb": "Breadcrumb",
+    "carousel": {
+      "next": "Next",
+      "previous": "Previous"
+    },
+    "close": "Close",
+    "home": "Home"
+  },
+  "sections": {
+    "header": {
+      "menu": "Main menu",
+      "store_locator": "Store locator",
+      "account": "Account",
+      "search": "Search",
+      "cart": "Cart",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu"
+    },
+    "cart_drawer": {
+      "title": "Cart",
+      "close": "Close cart",
+      "empty": "Your cart is empty",
+      "empty_text": "Our skincare is waiting for you.",
+      "continue": "Continue shopping",
+      "shipping_remaining_html": "Only <strong>{{ amount }}</strong> away from free shipping",
+      "shipping_free": "Free shipping unlocked",
+      "shipping_progress": "Progress towards free shipping",
+      "decrease": "Decrease quantity for {{ title }}",
+      "increase": "Increase quantity for {{ title }}",
+      "quantity": "Quantity:",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "taxes": "Taxes included. Shipping calculated at checkout.",
+      "checkout": "Checkout"
+    },
+    "before_after": {
+      "slider": "Compare before and after",
+      "rating": "Rated {{ rating }} out of 5",
+      "testimonials": "Customer testimonials"
+    },
+    "newsletter": {
+      "label": "Email address",
+      "placeholder": "Email",
+      "success": "Thank you! You're subscribed."
+    },
+    "footer": {
+      "country": "Country / currency",
+      "language": "Language",
+      "update": "Update",
+      "copyright": "© {{ year }} {{ shop }}. All rights reserved."
+    },
+    "under_construction": {
+      "heading": "This page is still being formulated",
+      "text": "Hello KNR team, this technical test focuses on the product page: the other templates will be developed at a later stage.",
+      "cta": "Discover the {{ product }}"
+    },
+    "reassurance": {
+      "label": "Our commitments"
+    }
+  },
+  "date_formats": {
+    "weekday_day_month": "%A, %B %-d"
+  },
+  "products": {
+    "product": {
+      "price": "Price",
+      "regular_price": "Regular price",
+      "unit_price": "{{ price }} per {{ unit }}",
+      "add_to_cart": "Add to cart",
+      "added_to_cart": "Added to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Currently unavailable.",
+      "delivery_estimate_html": "In stock, estimated delivery {{ date }}.",
+      "quick_add": "Add {{ title }} to cart",
+      "zoom": "Enlarge image",
+      "reviews_count": {
+        "one": "{{ count }} review",
+        "other": "{{ count }} reviews"
+      },
+      "rating_label": "Average rating {{ rating }} out of {{ max }}, {{ count }} reviews",
+      "gallery": "Image viewer"
+    }
+  }
+}

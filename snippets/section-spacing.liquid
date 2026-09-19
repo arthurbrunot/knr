@@ -1,0 +1,23 @@
+{%- liquid
+  assign pt = s.padding_top | default: 0
+  assign pb = s.padding_bottom | default: 0
+  assign mt = s.margin_top | default: 0
+  assign mb = s.margin_bottom | default: 0
+
+  if s.custom_mobile_spacing
+    assign pt_m = s.padding_top_mobile | default: 0
+    assign pb_m = s.padding_bottom_mobile | default: 0
+    assign mt_m = s.margin_top_mobile | default: 0
+    assign mb_m = s.margin_bottom_mobile | default: 0
+  else
+    assign pt_m = pt | divided_by: 2
+    assign pb_m = pb | divided_by: 2
+    assign mt_m = mt | divided_by: 2
+    assign mb_m = mb | divided_by: 2
+  endif
+-%}
+
+style="--section-pt: {{ pt | divided_by: 16.0 }}rem; --section-pb: {{ pb | divided_by: 16.0 }}rem;
+--section-mt: {{ mt | divided_by: 16.0 }}rem; --section-mb: {{ mb | divided_by: 16.0 }}rem;
+--section-pt-m: {{ pt_m | divided_by: 16.0 }}rem; --section-pb-m: {{ pb_m | divided_by: 16.0 }}rem;
+--section-mt-m: {{ mt_m | divided_by: 16.0 }}rem; --section-mb-m: {{ mb_m | divided_by: 16.0 }}rem;"

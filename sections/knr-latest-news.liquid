@@ -1,0 +1,316 @@
+{%- assign blog = section.settings.blog -%}
+
+{%- if blog != blank and blog.articles_count > 0 -%}
+  <div
+    class="knr-news section-spacing color-{{ section.settings.color_scheme }}"
+    {% render 'section-spacing', s: section.settings %}
+  >
+    <div class="knr-news__header layout">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="title-h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.link_label != blank -%}
+        <a href="{{ blog.url }}" class="link knr-news__all knr-news__all--desktop">
+          {{- section.settings.link_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <scroll-carousel class="knr-news__carousel">
+      <ul class="knr-news__track layout-grid scrollbar-hide" role="list" data-carousel-track>
+        {%- for article in blog.articles limit: section.settings.articles_count -%}
+          <li class="knr-news__card">
+            <a href="{{ article.url }}" class="knr-news__link">
+              <div class="knr-news__media">
+                {%- if article.image -%}
+                  {{
+                    article.image
+                    | image_url: width: 1000
+                    | image_tag:
+                      widths: '255,334,510,668,1000',
+                      sizes: '(min-width: 1024px) 23vw, 15.9375rem',
+                      loading: 'lazy',
+                      alt: article.image.alt
+                  }}
+                {%- endif -%}
+              </div>
+              <div class="knr-news__details">
+                {%- if article.tags.first -%}
+                  <div class="knr-news__category">
+                    <p class="text-base">{{ article.tags.first }}</p>
+                    <span class="knr-news__rule" aria-hidden="true"></span>
+                  </div>
+                {%- endif -%}
+                <h3 class="text-xl">{{ article.title }}</h3>
+                <p class="text-lg">
+                  {{ article.excerpt_or_content | strip_html | truncatewords: 30 }}
+                </p>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {% render 'knr-carousel-progress', class: 'knr-news__progress' %}
+
+      {%- if section.settings.link_label != blank -%}
+        <a href="{{ blog.url }}" class="link knr-news__all knr-news__all--mobile">
+          {{- section.settings.link_label -}}
+        </a>
+      {%- endif -%}
+    </scroll-carousel>
+  </div>
+
+  <script src="{{ 'scroll-carousel.js' | asset_url }}" type="module" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .knr-news {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .knr-news__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .knr-news__all--desktop {
+    display: none;
+  }
+
+  .knr-news__carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+  }
+
+  .knr-news__track {
+    position: relative;
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    scroll-padding-inline: var(--layout-px);
+    scroll-snap-type: x mandatory;
+  }
+
+  .knr-news__card {
+    flex: 0 0 15.9375rem;
+    scroll-snap-align: start;
+  }
+
+  .knr-news__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .knr-news__media {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--palette-accent-light) 16%, transparent);
+  }
+
+  .knr-news__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .knr-news__link:hover .knr-news__media img {
+    transform: scale(1.03);
+  }
+
+  .knr-news__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .knr-news__category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .knr-news__rule {
+    width: var(--space-4);
+    height: var(--border-thin);
+    background-color: var(--palette-accent);
+  }
+
+  @media (min-width: 1024px) {
+    .knr-news__all--desktop {
+      display: inline-flex;
+    }
+
+    .knr-news__all--mobile,
+    .knr-news__progress {
+      display: none;
+    }
+
+    .knr-news__track {
+      display: grid;
+      overflow: visible;
+    }
+
+    .knr-news__card {
+      grid-column: span 3;
+    }
+
+    .knr-news__link {
+      gap: var(--space-4);
+    }
+
+    .knr-news__details {
+      padding-right: 0.9375rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - Latest news",
+  "tag": "section",
+  "class": "knr-latest-news-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Latest news"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "articles_count",
+      "label": "Articles",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Voir tous les articles"
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Inner padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Inner padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Outer margin top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Outer margin bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_spacing",
+      "label": "Custom mobile spacing",
+      "default": true,
+      "info": "Off: mobile uses half the desktop values."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Inner padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Inner padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Outer margin top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Outer margin bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KNR - Latest news"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+{
+  "name": "knr",
+  "description": "Maison Célestine, Shopify theme for the KNR technical test. No build step: Liquid, vanilla CSS and native Web Components.",
+  "author": "Arthur Brunot",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "shopify theme dev --store knr-abrunot --store-password KNRDEV --theme-editor-sync",
+    "check": "shopify theme check",
+    "format": "prettier --write --cache .",
+    "format-check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.10.0",
+    "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": "^22.20.0"
+  }
+}

@@ -1,0 +1,25 @@
+{% doc %}
+  @param {string} [class] - Additional classes
+{% enddoc %}
+<div class="knr-carousel-progress {{ class }}" data-carousel-progress aria-hidden="true">
+  <span class="knr-carousel-progress__bar"></span>
+</div>
+
+{% stylesheet %}
+  .knr-carousel-progress {
+    position: relative;
+    width: 6.09375rem;
+    height: var(--border-thin);
+    overflow: hidden;
+    background-color: var(--carousel-track, var(--palette-accent-light));
+  }
+
+  .knr-carousel-progress__bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--progress-position, 0) * (100% - var(--progress-size, 0.25) * 100%));
+    width: calc(var(--progress-size, 0.25) * 100%);
+    background-color: var(--palette-text);
+  }
+{% endstylesheet %}

@@ -1,0 +1,13 @@
+{% doc %}
+  @param {object} variant - Product variant
+{% enddoc %}
+{%- if variant.unit_price_measurement -%}
+  {%- liquid
+    assign unit_reference = variant.unit_price_measurement.reference_unit | replace: 'ml', 'mL'
+    if variant.unit_price_measurement.reference_value != 1
+      assign unit_reference = variant.unit_price_measurement.reference_value | append: ' ' | append: unit_reference
+    endif
+    assign unit_amount = variant.unit_price | money
+  -%}
+  {{- 'products.product.unit_price' | t: price: unit_amount, unit: unit_reference -}}
+{%- endif -%}

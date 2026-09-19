@@ -1,0 +1,524 @@
+{%- liquid
+  assign before_image = section.settings.before_image
+  assign after_image = section.settings.after_image
+  assign testimonials = section.settings.testimonials
+-%}
+
+<div
+  class="knr-before-after section-spacing color-{{ section.settings.color_scheme }}"
+  {% render 'section-spacing', s: section.settings %}
+>
+  <div class="knr-before-after__inner">
+    {%- if section.settings.heading != blank or section.settings.text != blank -%}
+      <div class="knr-before-after__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="title-h1">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="knr-before-after__intro text-lg">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if before_image != blank and after_image != blank -%}
+      <before-after class="knr-before-after__compare" style="--position: 50%">
+        {{
+          after_image
+          | image_url: width: 2560
+          | image_tag:
+            class: 'knr-before-after__image',
+            widths: '390,780,1280,1920,2560',
+            sizes: '(min-width: 1024px) calc(100vw - 10rem), 100vw',
+            loading: 'lazy',
+            alt: after_image.alt
+        }}
+        <div class="knr-before-after__before">
+          {{
+            before_image
+            | image_url: width: 2560
+            | image_tag:
+              class: 'knr-before-after__image',
+              widths: '390,780,1280,1920,2560',
+              sizes: '(min-width: 1024px) calc(100vw - 10rem), 100vw',
+              loading: 'lazy',
+              alt: before_image.alt
+          }}
+        </div>
+
+        <p
+          class="knr-before-after__label knr-before-after__label--before label-lg"
+          aria-hidden="true"
+        >
+          {{- section.settings.before_label -}}
+        </p>
+        <p
+          class="knr-before-after__label knr-before-after__label--after label-lg"
+          aria-hidden="true"
+        >
+          {{- section.settings.after_label -}}
+        </p>
+
+        <span class="knr-before-after__divider" aria-hidden="true"></span>
+        <span class="knr-before-after__handle" aria-hidden="true">{% render 'icon-grip' %}</span>
+
+        <label class="visually-hidden" for="Compare-{{ section.id }}">
+          {{- 'sections.before_after.slider' | t -}}
+        </label>
+        <input
+          id="Compare-{{ section.id }}"
+          class="knr-before-after__range"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="50"
+          data-compare-range
+        >
+      </before-after>
+    {%- endif -%}
+
+    {%- if testimonials.size > 0 -%}
+      <scroll-carousel class="knr-before-after__testimonials">
+        <ul
+          class="knr-before-after__track scrollbar-hide"
+          role="list"
+          aria-label="{{ 'sections.before_after.testimonials' | t }}"
+          data-carousel-track
+        >
+          {%- for testimonial in testimonials -%}
+            {%- assign stars = testimonial.rating.value.rating | round -%}
+            <li class="knr-before-after__slide">
+              <figure class="knr-before-after__testimonial">
+                <figcaption class="knr-before-after__author">
+                  {%- if testimonial.rating != blank -%}
+                    <span
+                      class="knr-before-after__stars"
+                      role="img"
+                      aria-label="{{ 'sections.before_after.rating' | t: rating: stars }}"
+                    >
+                      {%- for i in (1..5) -%}
+                        {%- if i <= stars -%}
+                          {% render 'icon-star', class: 'knr-before-after__star' %}
+                        {%- else -%}
+                          {% render 'icon-star',
+                            class: 'knr-before-after__star knr-before-after__star--empty'
+                          %}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </span>
+                  {%- endif -%}
+                  {{ testimonial.author.value }}
+                </figcaption>
+                <blockquote class="knr-before-after__quote">
+                  {{ testimonial.quote.value }}
+                </blockquote>
+              </figure>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if testimonials.size > 1 -%}
+          <div class="knr-before-after__nav">
+            <button
+              type="button"
+              class="knr-before-after__arrow knr-before-after__arrow--prev"
+              data-carousel-prev
+            >
+              {% render 'icon-arrow-right' %}
+              <span class="visually-hidden">{{ 'general.carousel.previous' | t }}</span>
+            </button>
+            <button type="button" class="knr-before-after__arrow" data-carousel-next>
+              {% render 'icon-arrow-right' %}
+              <span class="visually-hidden">{{ 'general.carousel.next' | t }}</span>
+            </button>
+          </div>
+        {%- endif -%}
+      </scroll-carousel>
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'before-after.js' | asset_url }}" type="module" defer></script>
+<script src="{{ 'scroll-carousel.js' | asset_url }}" type="module" defer></script>
+
+{% stylesheet %}
+  .knr-before-after__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+    max-width: var(--layout-max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  .knr-before-after__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .knr-before-after__intro {
+    max-width: 33.75rem;
+  }
+
+  .knr-before-after__compare {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 342 / 192;
+    overflow: hidden;
+    background-color: var(--palette-background);
+  }
+
+  .knr-before-after__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .knr-before-after__before {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--position)) 0 0);
+  }
+
+  .knr-before-after__label {
+    position: absolute;
+    top: var(--space-6);
+    color: var(--palette-text);
+    pointer-events: none;
+  }
+
+  .knr-before-after__label--before {
+    left: var(--space-6);
+  }
+
+  .knr-before-after__label--after {
+    right: var(--space-6);
+  }
+
+  .knr-before-after__divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--position);
+    width: 2px;
+    background-color: var(--palette-background);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .knr-before-after__handle {
+    position: absolute;
+    top: 50%;
+    left: var(--position);
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--palette-text);
+    background-color: var(--palette-background);
+    border-radius: var(--radius-full);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .knr-before-after__handle .icon {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    transform: rotate(-90deg);
+  }
+
+  .knr-before-after__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    appearance: none;
+  }
+
+  .knr-before-after__range:focus-visible ~ .knr-before-after__handle {
+    outline: var(--border-base) solid var(--palette-background);
+    outline-offset: 3px;
+  }
+
+  .knr-before-after__testimonials {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+    width: 100%;
+  }
+
+  .knr-before-after__track {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .knr-before-after__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+  }
+
+  .knr-before-after__testimonial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+    text-align: center;
+  }
+
+  .knr-before-after__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    letter-spacing: var(--tracking-tighter);
+    color: var(--color-foreground-muted);
+  }
+
+  .knr-before-after__stars {
+    display: flex;
+    color: var(--palette-accent);
+  }
+
+  .knr-before-after__star {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+  }
+
+  .knr-before-after__star--empty {
+    color: var(--palette-accent-light);
+  }
+
+  .knr-before-after__quote {
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .knr-before-after__nav {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .knr-before-after__arrow {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    transition: opacity var(--duration-fast) ease;
+  }
+
+  .knr-before-after__arrow:hover {
+    opacity: 0.6;
+  }
+
+  .knr-before-after__arrow--prev .icon {
+    transform: rotate(180deg);
+  }
+
+  @media (min-width: 1024px) {
+    .knr-before-after__inner {
+      padding-inline: var(--space-20);
+    }
+
+    .knr-before-after__compare {
+      aspect-ratio: 2 / 1;
+    }
+
+    .knr-before-after__label {
+      top: var(--space-10);
+    }
+
+    .knr-before-after__label--before {
+      left: var(--space-10);
+    }
+
+    .knr-before-after__label--after {
+      right: var(--space-10);
+    }
+
+    .knr-before-after__testimonials {
+      width: 60.625rem;
+      max-width: 100%;
+      padding-top: var(--space-10);
+    }
+
+    .knr-before-after__quote {
+      font-size: var(--text-2xl);
+      line-height: var(--text-2xl--line-height);
+      letter-spacing: var(--tracking-tighter);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KNR - Before / after",
+  "tag": "section",
+  "class": "knr-before-after-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "surface"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ce que disent nos clientes"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text"
+    },
+    { "type": "header", "content": "Before / after" },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image",
+      "info": "Connect to the product's before image metafield."
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image",
+      "info": "Connect to the product's after image metafield."
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    },
+    { "type": "header", "content": "Testimonials" },
+    {
+      "type": "metaobject_list",
+      "id": "testimonials",
+      "label": "Testimonials",
+      "metaobject_type": "testimonial",
+      "limit": 10,
+      "info": "Connect to the product's testimonials metafield."
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Inner padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Inner padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Outer margin top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Outer margin bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_spacing",
+      "label": "Custom mobile spacing",
+      "default": true,
+      "info": "Off: mobile uses half the desktop values."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Inner padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Inner padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Outer margin top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Outer margin bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_spacing }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KNR - Before / after"
+    }
+  ]
+}
+{% endschema %}

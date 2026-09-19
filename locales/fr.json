@@ -1,0 +1,95 @@
+{
+  "accessibility": {
+    "skip_to_text": "Aller au contenu"
+  },
+  "general": {
+    "password_page": {
+      "login_form_password_label": "Mot de passe",
+      "login_form_password_placeholder": "Votre mot de passe",
+      "login_form_submit": "Entrer",
+      "login_form_error": "Mot de passe incorrect"
+    },
+    "breadcrumb": "Fil d'Ariane",
+    "carousel": {
+      "next": "Suivant",
+      "previous": "Précédent"
+    },
+    "close": "Fermer",
+    "home": "Accueil"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu principal",
+      "store_locator": "Nos points de vente",
+      "account": "Mon compte",
+      "search": "Rechercher",
+      "cart": "Panier",
+      "open_menu": "Ouvrir le menu",
+      "close_menu": "Fermer le menu"
+    },
+    "cart_drawer": {
+      "title": "Panier",
+      "close": "Fermer le panier",
+      "empty": "Votre panier est vide",
+      "empty_text": "Nos soins vous attendent.",
+      "continue": "Continuer mes achats",
+      "shipping_remaining_html": "Plus que <strong>{{ amount }}</strong> pour profiter de la livraison offerte",
+      "shipping_free": "Livraison offerte",
+      "shipping_progress": "Progression vers la livraison offerte",
+      "decrease": "Diminuer la quantité de {{ title }}",
+      "increase": "Augmenter la quantité de {{ title }}",
+      "quantity": "Quantité :",
+      "remove": "Retirer",
+      "subtotal": "Sous-total",
+      "taxes": "Taxes incluses. Frais de livraison calculés à l'étape suivante.",
+      "checkout": "Commander"
+    },
+    "before_after": {
+      "slider": "Comparer avant et après",
+      "rating": "Note : {{ rating }} sur 5",
+      "testimonials": "Témoignages clientes"
+    },
+    "newsletter": {
+      "label": "Adresse e-mail",
+      "placeholder": "E-mail",
+      "success": "Merci ! Votre inscription est confirmée."
+    },
+    "footer": {
+      "country": "Pays / devise",
+      "language": "Langue",
+      "update": "Mettre à jour",
+      "copyright": "© {{ year }} {{ shop }}. Tous droits réservés."
+    },
+    "under_construction": {
+      "heading": "Cette page est encore en formulation",
+      "text": "Bonjour l'équipe KNR, ce test technique porte sur la fiche produit : les autres templates seront développés dans un second temps.",
+      "cta": "Découvrir le {{ product }}"
+    },
+    "reassurance": {
+      "label": "Nos engagements"
+    }
+  },
+  "date_formats": {
+    "weekday_day_month": "%A %-d %B"
+  },
+  "products": {
+    "product": {
+      "price": "Prix",
+      "regular_price": "Prix habituel",
+      "unit_price": "{{ price }} par {{ unit }}",
+      "add_to_cart": "Ajouter au panier",
+      "added_to_cart": "Ajouté au panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Actuellement indisponible.",
+      "delivery_estimate_html": "En stock, livraison estimée {{ date }}.",
+      "quick_add": "Ajouter {{ title }} au panier",
+      "zoom": "Agrandir l'image",
+      "reviews_count": {
+        "one": "{{ count }} avis",
+        "other": "{{ count }} avis"
+      },
+      "rating_label": "Note moyenne {{ rating }} sur {{ max }}, {{ count }} avis",
+      "gallery": "Visionneuse d'images"
+    }
+  }
+}

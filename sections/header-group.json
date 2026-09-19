@@ -1,0 +1,39 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "knr-announcement-bar",
+      "blocks": {
+        "message": {
+          "type": "message",
+          "settings": {
+            "text": "Livraison estimée sous 48h",
+            "link_label": "consectetur.",
+            "link": "/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "message"
+      ],
+      "settings": {
+        "color_scheme": "inverse"
+      }
+    },
+    "header": {
+      "type": "knr-header",
+      "settings": {
+        "menu": "main-menu",
+        "store_locator_url": "/pages/contact",
+        "color_scheme": "default",
+        "overlay_on_product": true,
+        "overlay_color_scheme": "inverse"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

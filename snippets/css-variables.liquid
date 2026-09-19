@@ -1,0 +1,37 @@
+{%- liquid
+  assign palette = settings.colors
+-%}
+{% style %}
+  :root {
+    --palette-text: {{ palette.text }};
+    --palette-background: {{ palette.background }};
+    --palette-surface: {{ palette.surface }};
+    --palette-media: {{ palette.media }};
+    --palette-canvas: {{ palette.canvas }};
+    --palette-accent: {{ palette.accent }};
+    --palette-accent-light: {{ palette.accent_light }};
+    --palette-rating: {{ palette.rating }};
+    --palette-error: {{ palette.error }};
+    --palette-success: {{ palette.success }};
+  }
+
+  {% for scheme in settings.color_schemes -%}
+    {%- if scheme.id == settings.color_scheme.id %}:root,{% endif %}
+    .color-{{ scheme.id }} {
+      --color-background: {{ scheme.settings.background }};
+      --color-foreground: {{ scheme.settings.foreground }};
+      --color-foreground-muted: {{ scheme.settings.foreground_muted }};
+      --color-foreground-subtle: color-mix(in srgb, var(--color-foreground) 24%, transparent);
+      --color-border: var(--color-foreground-subtle);
+      --color-button: {{ scheme.settings.button }};
+      --color-button-label: {{ scheme.settings.button_label }};
+    }
+  {% endfor %}
+
+  {% for scheme in settings.color_schemes -%}
+    .color-{{ scheme.id }} {
+      color: var(--color-foreground);
+      background: {{ scheme.settings.background_gradient | default: 'var(--color-background)' }};
+    }
+  {% endfor %}
+{% endstyle %}

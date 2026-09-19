@@ -1,0 +1,125 @@
+{% doc %}
+  @param {object} variant - Product variant
+  @param {string} modifier - 'desktop' or 'mobile'
+{% enddoc %}
+{%- liquid
+  assign on_sale = false
+  if variant.compare_at_price > variant.price
+    assign on_sale = true
+  endif
+-%}
+<div class="knr-product-price knr-product-price--{{ modifier }}">
+  <p class="knr-product-price__row">
+    <span class="visually-hidden">{{ 'products.product.price' | t }}</span>
+    <span class="knr-product-price__current" data-product-price>{{ variant.price | money }}</span>
+    <span
+      class="visually-hidden"
+      data-product-compare-label
+      {% unless on_sale %}
+        hidden
+      {% endunless %}
+    >
+      {{- 'products.product.regular_price' | t -}}
+    </span>
+    <s
+      class="knr-product-price__compare"
+      data-product-compare
+      {% unless on_sale %}
+        hidden
+      {% endunless %}
+    >
+      {%- if on_sale -%}{{ variant.compare_at_price | money }}{%- endif -%}
+    </s>
+  </p>
+  <p class="knr-product-price__unit" data-product-unit>
+    {%- render 'knr-unit-price', variant: variant -%}
+  </p>
+</div>
+
+{% stylesheet %}
+  .knr-product-price {
+    flex-direction: column;
+    letter-spacing: var(--tracking-tight);
+    white-space: nowrap;
+  }
+
+  .knr-product-price__row {
+    display: flex;
+    align-items: center;
+  }
+
+  .knr-product-price__compare {
+    color: var(--color-foreground-subtle);
+  }
+
+  .knr-product-price__compare[hidden] {
+    display: none;
+  }
+
+  .knr-product-price__unit {
+    color: var(--color-foreground-muted);
+  }
+
+  .knr-product-price__unit:empty {
+    display: none;
+  }
+
+  .knr-product-price--mobile {
+    display: flex;
+    flex: none;
+    align-items: flex-end;
+  }
+
+  .knr-product-price--mobile .knr-product-price__row {
+    gap: 0.1875rem;
+  }
+
+  .knr-product-price--mobile .knr-product-price__current {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+  }
+
+  .knr-product-price--mobile .knr-product-price__compare {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
+
+  .knr-product-price--mobile .knr-product-price__unit {
+    font-size: var(--text-2xs);
+    line-height: 1rem;
+  }
+
+  .knr-product-price--desktop {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .knr-product-price--mobile {
+      display: none;
+    }
+
+    .knr-product-price--desktop {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .knr-product-price--desktop .knr-product-price__row {
+      gap: var(--space-1);
+    }
+
+    .knr-product-price--desktop .knr-product-price__current {
+      font-size: var(--text-xl);
+      line-height: var(--text-xl--line-height);
+    }
+
+    .knr-product-price--desktop .knr-product-price__compare,
+    .knr-product-price--desktop .knr-product-price__unit {
+      font-size: var(--text-base);
+      line-height: var(--text-base--line-height);
+    }
+
+    .knr-product-price--desktop .knr-product-price__unit {
+      padding-bottom: var(--space-0-5);
+    }
+  }
+{% endstylesheet %}

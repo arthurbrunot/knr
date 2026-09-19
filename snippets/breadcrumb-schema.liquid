@@ -1,0 +1,62 @@
+{%- liquid
+  assign trail_collection = null
+  case template.name
+    when 'product'
+      assign trail_collection = collection | default: product.collections.first
+      assign trail_title = product.title
+      assign trail_url = product.url
+    when 'collection'
+      assign trail_title = collection.title
+      assign trail_url = collection.url
+    when 'page'
+      assign trail_title = page.title
+      assign trail_url = page.url
+    when 'blog'
+      assign trail_title = blog.title
+      assign trail_url = blog.url
+    when 'article'
+      assign trail_title = article.title
+      assign trail_url = article.url
+  endcase
+-%}
+
+{%- if trail_title != blank -%}
+  {%- assign position = 2 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ 'general.home' | t | json }},
+          "item": {{ shop.url | json }}
+        },
+        {%- if trail_collection -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ trail_collection.title | json }},
+            "item": {{ trail_collection.url | prepend: shop.url | json }}
+          },
+          {%- assign position = 3 -%}
+        {%- elsif template.name == 'article' -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ blog.title | json }},
+            "item": {{ blog.url | prepend: shop.url | json }}
+          },
+          {%- assign position = 3 -%}
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "name": {{ trail_title | json }},
+          "item": {{ trail_url | prepend: shop.url | json }}
+        }
+      ]
+    }
+  </script>
+{%- endif -%}

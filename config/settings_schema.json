@@ -1,0 +1,110 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "KNR - Maison Célestine",
+    "theme_version": "1.0.0",
+    "theme_author": "Arthur Brunot",
+    "theme_documentation_url": "https://github.com/arthurbrunot/knr",
+    "theme_support_url": "https://github.com/arthurbrunot/knr"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Brand palette. Keys describe a usage, not a hue: color schemes and section defaults reference them."
+      },
+      {
+        "type": "color_palette",
+        "id": "colors",
+        "default": {
+          "text": "#000000",
+          "background": "#FFFFFF",
+          "surface": "#F9F8F5",
+          "media": "#F5F4F1",
+          "canvas": "#DFDBD6",
+          "accent": "#B5A282",
+          "accent_light": "#DCD5C3",
+          "rating": "#E2D3BB",
+          "error": "#AD000D",
+          "success": "#317F2B"
+        }
+      },
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "{{ settings.colors.background }}"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "Background gradient",
+            "info": "Optional. Overrides the solid background."
+          },
+          {
+            "type": "color",
+            "id": "foreground",
+            "label": "Text",
+            "default": "{{ settings.colors.text }}"
+          },
+          {
+            "type": "color",
+            "id": "foreground_muted",
+            "label": "Secondary text",
+            "info": "Breadcrumb, meta, secondary information.",
+            "default": "{{ settings.colors.accent }}"
+          },
+          {
+            "type": "color",
+            "id": "button",
+            "label": "Primary button",
+            "default": "{{ settings.colors.text }}"
+          },
+          {
+            "type": "color",
+            "id": "button_label",
+            "label": "Primary button label",
+            "default": "{{ settings.colors.background }}"
+          }
+        ],
+        "role": {
+          "text": "foreground",
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "links": "foreground",
+          "icons": "foreground",
+          "primary_button": "button",
+          "on_primary_button": "button_label",
+          "primary_button_border": "button",
+          "secondary_button": "background",
+          "on_secondary_button": "foreground",
+          "secondary_button_border": "foreground"
+        }
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Page color scheme",
+        "default": "default"
+      }
+    ]
+  },
+  {
+    "name": "Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 x 32px .png recommended"
+      }
+    ]
+  }
+]

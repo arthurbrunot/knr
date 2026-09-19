@@ -1,0 +1,49 @@
+{% case template.name %}
+  {% when 'index' %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }}
+        {%- if shop.brand.logo -%}
+          , "logo": {{ shop.brand.logo | image_url: width: 600 | prepend: 'https:' | json }}
+        {%- endif -%}
+        {%- if shop.brand.short_description != blank -%}
+          , "description": {{ shop.brand.short_description | json }}
+        {%- endif %}
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }}
+      }
+    </script>
+
+  {% when 'article' %}
+    <script type="application/ld+json">
+      {{ article | structured_data }}
+    </script>
+
+  {% when 'product' %}
+    <script type="application/ld+json">
+      {{ product | structured_data }}
+    </script>
+
+  {% when 'page' %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": {{ page_title | json }},
+        "url": {{ canonical_url | json }}
+        {% if page_description %}, "description": {{ page_description | json }}{% endif %}
+      }
+    </script>
+{% endcase %}
+
+{% render 'breadcrumb-schema' %}

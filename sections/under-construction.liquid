@@ -1,0 +1,68 @@
+<div class="under-construction color-{{ section.settings.color_scheme }}">
+  <div class="under-construction__inner">
+    <span class="under-construction__rule" aria-hidden="true"></span>
+    <h1 class="title-h1">{{ 'sections.under_construction.heading' | t }}</h1>
+    <p class="text-lg text-muted">{{ 'sections.under_construction.text' | t }}</p>
+    {%- assign featured = section.settings.product -%}
+    {%- if featured != blank -%}
+      <a href="{{ featured.url }}" class="btn btn-secondary">
+        {{- 'sections.under_construction.cta' | t: product: featured.title -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .under-construction {
+    display: grid;
+    place-items: center;
+    min-height: calc(100dvh - var(--header-height) - var(--announcement-height));
+    padding: var(--space-20) var(--layout-px);
+  }
+
+  .under-construction__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    max-width: 33.75rem;
+    text-align: center;
+  }
+
+  .under-construction__rule {
+    width: var(--space-4);
+    height: var(--border-thin);
+    background-color: var(--palette-accent);
+  }
+
+  .under-construction .btn {
+    margin-top: var(--space-4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Under construction",
+  "tag": "section",
+  "class": "under-construction-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "surface"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Featured product",
+      "info": "Linked from the button."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Under construction"
+    }
+  ]
+}
+{% endschema %}
